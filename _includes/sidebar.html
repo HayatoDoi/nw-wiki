@@ -7,27 +7,38 @@
     {% endif %}
   </header>
 
-  {%- assign sections = "study, network, filters" | split: ", " -%}
+  {% assign sections = "" | split: "|" %}
+  {%- for item in site['wiki_data'] -%}
+    {%- assign fls = item.url | split: "/" -%}
+    {% assign sections = sections | push: fls[2] %}
+  {%- endfor -%}
+  {% assign sections = sections | uniq %}
 
   <nav class="sidebar__nav">
     <div class="sidebar__nav-interior">
+
       {%- for section in sections -%}
-        <h3 class="section__header" id="{{ section }}">{{ section | capitalize }}</h3>
+        <h3 class="section__header" id="{{ section }}">{{ section | url_decode }}</h3>
 
         <ul class="section__links">
-        {%- for item in site[section] -%}
+        {%- for item in site['wiki_data'] -%}
+          {%- assign fls = item.url | split: "/" -%}
+          {% if section == fls[2] %}
             <li class="section__item">
-                <a href="{{ item.url | relative_url }}" class="section__link{% if item.url == page.url %} section__link--is-active{% endif %}">{{ item.title }}</a>
+              <a href="{{ item.url | relative_url }}" class="section__link{% if item.url == page.url %} section__link--is-active{% endif %}">{{ item.title }}</a>
             </li>
+          {% endif %}
         {%- endfor -%}
         </ul>
       {%- endfor -%}
     </div>
 
-    {%- if sections contains page.collection -%}
+    {%- assign fls = page.url | split: "/" -%}
+    {%- if fls[2] -%}
     <script type="text/javascript">
-        document.getElementById("{{ page.collection }}").scrollIntoView();
+        document.getElementById("{{ fls[2] }}").scrollIntoView();
     </script>
     {%- endif -%}
   </nav>
 </div>
+
