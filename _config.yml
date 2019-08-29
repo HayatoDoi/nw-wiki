@@ -1,0 +1,44 @@
+title: doi-wiki
+description: 雑なメモ置き場
+
+# Build settings
+baseurl:                / # the subpath of your site, e.g. /blog/
+url:                    localhost # the base hostname & protocol for your site
+permalink:              pretty
+exclude:
+  - README.md
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - Gruntfile.js
+  - package.json
+  - package-lock.json
+  - node_modules
+keep_files:             ["css"]
+
+# Collections
+collections:
+  study:
+    output: true
+  network:
+    output: true
+  filters:
+    output: true
+
+# Plugins
+plugins:
+  - jekyll-redirect-from
+  - jekyll-diagrams
+
+diagrams:
+  blockdiag:
+    options: '-Tsvg --nodoctype'
+  nwdiag:
+    options: '-Tsvg -f /Library/Fonts/NotoSerifCJK.ttc'
+
+# Front matter defaults
+defaults:
+  - scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: default

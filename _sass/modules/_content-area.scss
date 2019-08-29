@@ -1,0 +1,22 @@
+.content__item {
+  margin-bottom: $spacing-unit * 2;
+}
+
+.highlight {
+  background: lighten($color-blue-1, 1);
+}
+
+.code-label {
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-size: 15px;
+  background: darken($color-blue-1, 5);
+  border: 1px solid $color-blue-2;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+}
+
+.code-label + .highlighter-rouge .highlight {
+  border-top: none;
+  border-radius: 0 0 3px 3px;
+}

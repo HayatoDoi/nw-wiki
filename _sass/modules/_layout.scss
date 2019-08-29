@@ -1,0 +1,160 @@
+$sidebar-width: 250px;
+$logo-height: 130px;
+$wrapper-width: 800px;
+
+body {
+  // display: flex;
+  // flex-direction: column;
+
+  // @include tablet-and-up {
+  //   flex-direction: row;
+  // }
+}
+
+
+/*============================================================================
+  Content Area
+ ==============================================================================*/
+
+.content__area {
+  width: 100%;
+
+  @include tablet-and-up {
+    padding: $spacing-unit $spacing-unit $spacing-unit ($spacing-unit + $sidebar-width);
+  }
+}
+
+.content__overlay {
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+  display: none;
+}
+
+.content__overlay--is-active {
+  display: block;
+}
+
+.content {
+  max-width: $wrapper-width;
+  margin: 0 auto;
+  padding: 0 $spacing-unit;
+  @extend %clearfix;
+}
+
+/*============================================================================
+  Sidebar
+ ==============================================================================*/
+
+.sidebar {
+  background: $color-blue-5;
+  width: $sidebar-width;
+  position: fixed;
+  transform: translateX($sidebar-width * -1);
+  transition: all 0.15s ease;
+  z-index: 2;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+
+  @include tablet-and-up {
+    transform: translateX(0);
+  }
+}
+
+.sidebar--is-visible {
+  transform: translateX(0);
+}
+
+.sidebar__logo {
+  border-bottom: 1px solid $color-blue-4;
+  color: $color-white;
+  font-size: $base-font-size * 2;
+  font-weight: 300;
+  height: $logo-height;
+  line-height: $logo-height;
+  margin-bottom: 0;
+  text-align: center;
+
+
+  // &:after {
+  //   content: '\01F4A7'; // Water droplet emoji
+  //   vertical-align: middle;
+  // }
+
+  a {
+    color: $color-white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.sidebar__nav {
+
+  font-weight: bold;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.sidebar__nav-interior {
+  height: 100%;
+  // Add a bit more padding at the bottom for consistency.
+  padding: $spacing-unit $spacing-unit ($spacing-unit + $logo-height);
+}
+
+.section__header {
+  font-size: 1em;
+  text-decoration: none;
+  color: $color-white;
+  margin-top: 0;
+  margin-bottom: $spacing-unit / 4;
+
+  .section__links + & {
+    margin-top: $spacing-unit;
+  }
+}
+
+.section__links {
+  font-size: 0.9em;
+  font-weight: normal;
+
+  list-style: none;
+  margin-left: $spacing-unit / 2;
+}
+
+.section__item {
+  list-style: none;
+}
+
+.section__link {
+  display: inline-block;
+  margin-top: $spacing-unit/4;
+  opacity: 0.75;
+  text-decoration: none;
+  color: $color-white;
+
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  &:empty {
+    // there is an error in the liquid logic that spits out a
+    // empty last-child
+    display: none;
+  }
+
+  &:visited {
+    color: $color-white;
+  }
+}
+
+.section__link--is-active {
+  font-weight: bold;
+  opacity: 1;
+  color: $color-white;
+}

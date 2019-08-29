@@ -1,0 +1,16 @@
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+   }
+}
+
+.visually-hidden {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}

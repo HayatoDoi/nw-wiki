@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  jekyll-in-plug:
+    build: ./container/jekyll
+    environment:
+      JEKYLL_ENV: docker
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/srv/jekyll
+    # command: >
+    #   jekyll new . --force
+    command: >
+      jekyll serve \
+        --watch \
+        --force_polling \
+        --config  _config.yml,_config.docker.yml
