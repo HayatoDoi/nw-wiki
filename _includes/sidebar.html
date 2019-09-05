@@ -1,44 +1,101 @@
-<div class="sidebar">
-  <header class="sidebar__logo" role="banner">
-    {% if page.home %}
-      doi-wiki
-    {% else %}
-      <a href="{{ "/" | relative_url }}">doi-wiki</a>
-    {% endif %}
-  </header>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar_main">
+    <header class="sidebar__logo" role="banner">
+      {% if page.home %}
+        doi-wiki
+      {% else %}
+        <a href="{{ "/" | relative_url }}">doi-wiki</a>
+      {% endif %}
+    </header>
 
-  {% assign sections = "" | split: "|" %}
-  {%- for item in site['wiki_data'] -%}
-    {%- assign fls = item.url | split: "/" -%}
-    {% assign sections = sections | push: fls[2] %}
-  {%- endfor -%}
-  {% assign sections = sections | uniq %}
+    {% assign sections = "" | split: "|" %}
+    {%- for item in site['wiki_data'] -%}
+      {%- assign fls = item.url | split: "/" -%}
+      {% assign sections = sections | push: fls[2] %}
+    {%- endfor -%}
+    {% assign sections = sections | uniq %}
 
-  <nav class="sidebar__nav">
-    <div class="sidebar__nav-interior">
+    <nav class="sidebar__nav">
+      <div class="sidebar__nav-interior">
 
-      {%- for section in sections -%}
-        <h3 class="section__header" id="{{ section }}">{{ section | url_decode }}</h3>
+        {%- for section in sections -%}
+          <h3 class="section__header" id="{{ section }}">{{ section | url_decode }}</h3>
 
-        <ul class="section__links">
-        {%- for item in site['wiki_data'] -%}
-          {%- assign fls = item.url | split: "/" -%}
-          {% if section == fls[2] %}
-            <li class="section__item">
-              <a href="{{ item.url | relative_url }}" class="section__link{% if item.url == page.url %} section__link--is-active{% endif %}">{{ item.title }}</a>
-            </li>
-          {% endif %}
+          <ul class="section__links">
+          {%- for item in site['wiki_data'] -%}
+            {%- assign fls = item.url | split: "/" -%}
+            {% if section == fls[2] %}
+              <li class="section__item">
+                <a href="{{ item.url | relative_url }}" class="section__link{% if item.url == page.url %} section__link--is-active{% endif %}">{{ item.title }}</a>
+              </li>
+            {% endif %}
+          {%- endfor -%}
+          </ul>
         {%- endfor -%}
-        </ul>
-      {%- endfor -%}
-    </div>
+      </div>
 
-    {%- assign fls = page.url | split: "/" -%}
-    {%- if fls[2] -%}
-    <script type="text/javascript">
-        document.getElementById("{{ fls[2] }}").scrollIntoView();
-    </script>
-    {%- endif -%}
-  </nav>
+      {%- assign fls = page.url | split: "/" -%}
+      {%- if fls[2] -%}
+      <script type="text/javascript">
+          document.getElementById("{{ fls[2] }}").scrollIntoView();
+      </script>
+      {%- endif -%}
+    </nav>
+  </div>
+  <div id="sidebar_split"></div>
 </div>
 
+<style type="text/css">
+  body{
+    height: 100vh;
+  }
+  .sidebar_main{
+    float: left;
+  }
+  #sidebar_split{
+    background-color: #696666;
+    height:100%;
+    float: right;
+    width: 6px;
+  }
+</style>
+
+<script>
+
+  function onMouseMove(e){
+    if(sidebarSplit.isEqualNode(e.target)){
+      document.body.style.cursor = "col-resize";
+    }
+    else{
+      document.body.style.cursor = "auto";
+    }
+  }
+  let eventLook = "unlook";
+  let sidebarSplit = document.getElementById('sidebar_split');
+
+  document.addEventListener('mousedown', e => {
+    if(sidebarSplit.isEqualNode(e.target)){
+      document.body.style.cursor = "col-resize";
+      document.onselectstart = () => { return false;};
+      document.onmousemove = e => {
+        if(eventLook !== "look"){
+          eventLook = "look";
+          setTimeout(() => {
+            document.getElementById('sidebar').style.width = e.pageX + "px";
+            eventLook = "unlook";
+            console.log(eventLook);
+          },10);
+        }
+      };
+    }
+  });
+
+  document.onmousemove = e => {onMouseMove(e)};
+
+  document.onmouseup = () => {
+    document.body.style.cursor = "auto";
+    document.onselectstart = "";
+    document.onmousemove = e => {onMouseMove(e)};
+  };
+
+</script>
