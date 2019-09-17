@@ -16,3 +16,12 @@ $ pip3 install blockdiag nwdiag
 
 $ bundle install
 ```
+
+## How to use 404 page
+### nginx
+```
+error_page 404 /<base_url>/404.html;
+```
+
+### apache
+Enable .htaccess
