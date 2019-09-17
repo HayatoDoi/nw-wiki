@@ -18,6 +18,9 @@ exclude:
   - node_modules
   - docker-compose.yml
 keep_files:             ["css"]
+include: 
+  - '.htaccess'
+
 
 # Collections
 collections:
