@@ -1,4 +1,4 @@
-# doi-wiki Docs
+# nw-wiki Docs
 
 ## To run
 
