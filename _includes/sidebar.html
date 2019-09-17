@@ -1,9 +1,11 @@
 <div class="sidebar">
   <header class="sidebar__logo" role="banner">
-    {% if page.home %}
-      doi-wiki
-    {% else %}
-      <a href="{{ "/" | relative_url }}">doi-wiki</a>
+    {% if page.home != true %}
+      <a href="{{ "/" | relative_url }}">
+    {% endif %}
+    {% if site.wiki_name %}{{ site.wiki_name }}{% else %}nw-wiki{% endif %}
+    {% if !page.home %}
+      </a>
     {% endif %}
   </header>
 
